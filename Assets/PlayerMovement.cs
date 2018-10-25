@@ -4,38 +4,54 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour {
 
-    GameObject player;
-    bool active = true;
-    Vector3 temp;
-    int counter = 1;
+    private GameObject player;
+    private bool active = true;
+    private bool move = false;
+    private float timer = 0f;
+    private string key = "space";
+   
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        temp = new Vector3(0.1f, 0, 0);
     }
 
-    void Update()
+    void Update ()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            counter = 0;
+        if (Input.GetKeyDown(key) && !move)
+        { 
+            timer = 0f;
         }
-        temp = transform.right* Mathf.Sin(Time.time * 0.01f);
-        if (active && counter != 1) 
-        {
-            player.transform.position += temp;
-            if (player.transform.position.x >= 5)
-            {
-                active = false;
                 
-            }
-        } else if (counter != 1)
+        if (Input.GetKey(key) && !move)
         {
-            player.transform.position -= temp;
-            if (player.transform.position.x <= 0)
+            timer += Time.deltaTime;
+        }
+ 
+        if (Input.GetKeyUp(key))
+        {           
+            move = true;
+        }
+
+        if (move) 
+        {                  
+            if (active) 
+            {                
+                Vector3 temp = transform.right * Mathf.Sin(timer * 0.1f);   
+                player.transform.position -= temp;
+                if (player.transform.position.x <= -5)
+                {
+                    active = false;
+                    
+                }
+            } else
             {
-                active = true;
-                counter++;
+                Vector3 temp = transform.right * Mathf.Sin(timer * 0.1f);   
+                player.transform.position += temp;
+                if (player.transform.position.x >= 0)
+                {
+                    active = true;
+                    move = false;
+                }
             }
         }
     }
