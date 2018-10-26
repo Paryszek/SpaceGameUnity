@@ -7,6 +7,7 @@ public class CharacterController2D : MonoBehaviour {
     private int LEFT_CHARACTER_BORDER = -5;
     private int RIGHT_CHARACTER_BORDER = 4;
     private float MAX_POWER = 1.5f;
+    private Vector3 ROPE_SPEED = new Vector3(0.1f, 0, 0);
 
     private Rigidbody2D player;
     private bool active = true;
@@ -14,6 +15,7 @@ public class CharacterController2D : MonoBehaviour {
     private float timer = 0.5f;
     private string key = "space";
     Text powerAmount;
+    Vector3 temp;
     
    
     void Start()
@@ -27,14 +29,14 @@ public class CharacterController2D : MonoBehaviour {
     {
         if (Input.GetKeyDown(key) && !move)
         { 
-            timer = 0.5f;
+            timer = 0f;
         }
                 
         if (Input.GetKey(key) && !move)
         {
             timer += Time.deltaTime;
             timer = timer % MAX_POWER;
-            powerAmount.text = (timer * 100 / MAX_POWER).ToString()  + '%';
+            powerAmount.text = Mathf.RoundToInt(timer * 100 / MAX_POWER).ToString()  + '%';
         }
  
         if (Input.GetKeyUp(key))
@@ -43,21 +45,18 @@ public class CharacterController2D : MonoBehaviour {
         }
 
         if (move) 
-        {                  
+        {
             if (active) 
-            {                                
-                Vector3 temp = transform.right * Mathf.Sin(timer * 0.1f);   
-
-                player.transform.position -= temp;
+            {
+                timer += Time.deltaTime;
+                player.transform.position -= transform.right * Mathf.Lerp(0, 1, Mathf.Sin(timer * 0.1f));
                 if (player.transform.position.x <= LEFT_CHARACTER_BORDER)
                 {
                     active = false;
-                    
                 }
             } else
             {
-                Vector3 temp = transform.right * Mathf.Sin(timer * 0.1f);   
-                player.transform.position += temp;
+                player.transform.position += ROPE_SPEED;
                 if (player.transform.position.x >= RIGHT_CHARACTER_BORDER)
                 {
                     active = true;
