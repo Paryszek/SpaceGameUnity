@@ -48,7 +48,7 @@ public class CharacterController2D : MonoBehaviour {
         {
             if (active) 
             {
-                timer += Time.deltaTime;
+                timer += (Time.deltaTime * 0.4f);
                 player.transform.position -= transform.right * Mathf.Lerp(0, 1, Mathf.Sin(timer * 0.1f));
                 if (player.transform.position.x <= LEFT_CHARACTER_BORDER)
                 {
