@@ -16,12 +16,25 @@ public class CharacterController2D : MonoBehaviour {
     private string key = "space";
     Text powerAmount;
     Vector3 temp;
-    
-   
+
     void Start()
     {
         player = GetComponent<Rigidbody2D>();
         InitPowerLabel();
+
+    }
+
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        if (col.gameObject.name == "Cube")
+        {
+            Debug.Log("player");
+        }
+
+        if (col.gameObject.name == "Cube(Clone)")
+        {
+            Debug.Log("player");
+        }
 
     }
 
