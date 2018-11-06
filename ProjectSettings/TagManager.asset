@@ -6,6 +6,8 @@ TagManager:
   tags:
   - PowerAmount
   - PowerCanvas
+  - Enemy
+  - Bonus
   layers:
   - Default
   - TransparentFX
