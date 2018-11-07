@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class CharacterController2D : MonoBehaviour {
+    public static Text gameOver;
+
     private int LEFT_CHARACTER_BORDER = -5;
     private int RIGHT_CHARACTER_BORDER = 4;
     private float MAX_POWER = 1.5f;
@@ -11,16 +13,18 @@ public class CharacterController2D : MonoBehaviour {
 
     private Rigidbody2D player;
     private bool active = true;
-    private bool move = false;
     private float timer = 0.5f;
     private string key = "space";
+    private bool move = false;
+    private int points = 0;
     Text powerAmount;
+    Text pointsAmount;
     Vector3 temp;
 
     void Start()
     {
         player = GetComponent<Rigidbody2D>();
-        InitPowerLabel();
+        InitLabels();
 
     }
 
@@ -28,7 +32,8 @@ public class CharacterController2D : MonoBehaviour {
     {
         if (col.gameObject.tag == "Bonus")
         {
-            powerAmount.text = Mathf.RoundToInt(timer * 100 / MAX_POWER).ToString() + '%';
+            points += 1;
+            pointsAmount.text = points.ToString();
             Destroy(col.gameObject);
         }
 
@@ -75,10 +80,14 @@ public class CharacterController2D : MonoBehaviour {
         }
     }
 
-    void InitPowerLabel() {
+    void InitLabels() {
         GameObject canvasObject = GameObject.FindGameObjectWithTag("PowerCanvas");
         Transform textTr = canvasObject.transform.Find("Power");
         powerAmount = textTr.GetComponent<Text>();
+        textTr = canvasObject.transform.Find("Points");
+        pointsAmount = textTr.GetComponent<Text>();
+        textTr = canvasObject.transform.Find("GameOver");
+        gameOver = textTr.GetComponent<Text>();
     }
 
 

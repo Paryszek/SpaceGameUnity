@@ -5,19 +5,20 @@ using UnityEngine.UI;
 
 public class Bonus : MonoBehaviour
 {
-    public float delay = 1f;
     public GameObject bonus;
-    // Use this for initialization
+
     void Start()
     {
-        InvokeRepeating("Spawn", delay, 1);
+        InvokeRepeating("Spawn", 1f, 4f);
     }
 
-    // Update is called once per frame
     void Spawn()
     {
-        bonus = Instantiate(bonus, new Vector3(Random.Range(-6, 6), 10, 0), Quaternion.identity);
-        bonus.name = "Bonus";
+        if (CharacterController2D.gameOver.text != "Game Over") 
+		{
+            bonus = Instantiate(bonus, new Vector3(Random.Range(-6, 6), 10, 0), Quaternion.identity);
+            bonus.name = "Bonus";
+        }
     }
 
 }

@@ -25,6 +25,7 @@ public class Movement : MonoBehaviour
         if (col.gameObject.tag == "Player")
         {
             Destroy(col.gameObject);
+            CharacterController2D.gameOver.text = "Game Over";
         }
 
     }

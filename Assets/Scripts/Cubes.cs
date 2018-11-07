@@ -4,17 +4,18 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class Cubes : MonoBehaviour {
-    public float delay = 1f;
     public GameObject cube;
-	// Use this for initialization
+
 	void Start () {
-        InvokeRepeating("Spawn", delay, 1);
+        	InvokeRepeating("Spawn", 1f, 3f);
 	}
 	
-	// Update is called once per frame
 	void Spawn () {
-        Instantiate(cube, new Vector3(Random.Range(-6, 6), 10, 0),Quaternion.identity);
-        cube.name = "Cube";
+		if (CharacterController2D.gameOver.text != "Game Over") 
+		{
+			Instantiate(cube, new Vector3(Random.Range(-6, 6), 10, 0), Quaternion.identity);
+			cube.name = "Cube";
+		}
 	}
 
 }
