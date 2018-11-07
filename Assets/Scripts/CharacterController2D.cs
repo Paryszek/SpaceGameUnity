@@ -26,14 +26,10 @@ public class CharacterController2D : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.gameObject.name == "Cube")
+        if (col.gameObject.tag == "Bonus")
         {
-            Debug.Log("player");
-        }
-
-        if (col.gameObject.name == "Cube(Clone)")
-        {
-            Debug.Log("player");
+            powerAmount.text = Mathf.RoundToInt(timer * 100 / MAX_POWER).ToString() + '%';
+            Destroy(col.gameObject);
         }
 
     }
@@ -84,4 +80,6 @@ public class CharacterController2D : MonoBehaviour {
         Transform textTr = canvasObject.transform.Find("Power");
         powerAmount = textTr.GetComponent<Text>();
     }
+
+
 }

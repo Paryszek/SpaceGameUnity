@@ -14,6 +14,7 @@ public class Cubes : MonoBehaviour {
 	// Update is called once per frame
 	void Spawn () {
         Instantiate(cube, new Vector3(Random.Range(-6, 6), 10, 0),Quaternion.identity);
+        cube.name = "Cube";
 	}
 
 }
