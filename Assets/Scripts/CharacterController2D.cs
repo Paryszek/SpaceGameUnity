@@ -6,11 +6,10 @@ using UnityEngine.UI;
 public class CharacterController2D : MonoBehaviour {
     public static Text gameOver;
 
-    private int LEFT_CHARACTER_BORDER = -5;
-    private int RIGHT_CHARACTER_BORDER = 4;
+    private float screenHalfWidth;
     private float MAX_POWER = 1.5f;
     private Vector3 ROPE_SPEED = new Vector3(0.1f, 0, 0);
-
+    private float initPlayerPositionX;
     private Rigidbody2D player;
     private bool active = true;
     private float timer = 0.5f;
@@ -24,6 +23,8 @@ public class CharacterController2D : MonoBehaviour {
     void Start()
     {
         player = GetComponent<Rigidbody2D>();
+        initPlayerPositionX = player.transform.position.x;
+        screenHalfWidth = Camera.main.aspect * Camera.main.orthographicSize;
         InitLabels();
 
     }
@@ -64,14 +65,14 @@ public class CharacterController2D : MonoBehaviour {
             {
                 timer += (Time.deltaTime * 0.4f);
                 player.transform.position -= transform.right * Mathf.Lerp(0, 1, Mathf.Sin(timer * 0.1f));
-                if (player.transform.position.x <= LEFT_CHARACTER_BORDER)
+                if (player.transform.position.x <= -screenHalfWidth - (screenHalfWidth - initPlayerPositionX - 2))
                 {
                     active = false;
                 }
             } else
             {
                 player.transform.position += ROPE_SPEED;
-                if (player.transform.position.x >= RIGHT_CHARACTER_BORDER)
+                if (player.transform.position.x >= screenHalfWidth + (screenHalfWidth - initPlayerPositionX - 3))
                 {
                     active = true;
                     move = false;
