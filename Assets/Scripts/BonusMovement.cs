@@ -14,7 +14,7 @@ public class BonusMovement : MonoBehaviour
     void Update()
     {
         transform.position += new Vector3(Input.GetAxis("Horizontal"), 0, 0);
-        if (transform.localPosition.y < -5)
+        if (transform.localPosition.y < -15)
         {
             Destroy(this.gameObject);
         }

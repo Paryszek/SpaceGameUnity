@@ -13,7 +13,7 @@ public class Cubes : MonoBehaviour {
 	void Spawn () {
 		if (CharacterController2D.gameOver.text != "Game Over") 
 		{
-			Instantiate(cube, new Vector3(Random.Range(-6, 6), 10, 0), Quaternion.identity);
+			Instantiate(cube, new Vector3(Random.Range(-5, 3), 15, 0), Quaternion.identity);
 			cube.name = "Cube";
 		}
 	}
