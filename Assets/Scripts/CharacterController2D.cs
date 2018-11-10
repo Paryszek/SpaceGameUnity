@@ -6,24 +6,18 @@ using UnityEngine.UI;
 public class CharacterController2D : MonoBehaviour {
     public static Text gameOver;
 
+    private float MAX_POWER = 0.06f;
+    private float MIN_POWER = -0.06f;
+
     private float screenHalfWidth;
-    private float MAX_POWER = 1.5f;
-    private Vector3 ROPE_SPEED = new Vector3(0.1f, 0, 0);
-    private float initPlayerPositionX;
     private Rigidbody2D player;
-    private bool active = true;
-    private float timer = 0.5f;
-    private string key = "space";
-    private bool move = false;
-    private int points = 0;
-    Text powerAmount;
-    Text pointsAmount;
-    Vector3 temp;
+    private Vector3 playerSpeed = new Vector3(0, 0);
+    private float powerAmount = 0.2f;
+    Text powerLeft;
 
     void Start()
     {
         player = GetComponent<Rigidbody2D>();
-        initPlayerPositionX = player.transform.position.x;
         screenHalfWidth = Camera.main.aspect * Camera.main.orthographicSize;
         InitLabels();
 
@@ -33,8 +27,7 @@ public class CharacterController2D : MonoBehaviour {
     {
         if (col.gameObject.tag == "Bonus")
         {
-            points += 1;
-            pointsAmount.text = points.ToString();
+            powerAmount += 0.08f;
             Destroy(col.gameObject);
         }
 
@@ -42,51 +35,49 @@ public class CharacterController2D : MonoBehaviour {
 
     void Update ()
     {
-        if (Input.GetKeyDown(key) && !move)
-        { 
-            timer = 0f;
-        }
-                
-        if (Input.GetKey(key) && !move)
+
+        powerLeft.text = (powerAmount * 100 / 0.2f).ToString() + '%';
+
+        if (Input.GetKey(KeyCode.G) && powerAmount > 0)
         {
-            timer += Time.deltaTime;
-            timer = timer % MAX_POWER;
-            powerAmount.text = Mathf.RoundToInt(timer * 100 / MAX_POWER).ToString()  + '%';
-        }
- 
-        if (Input.GetKeyUp(key))
-        {           
-            move = true;            
+            powerAmount -= 0.005f;
+            playerSpeed.x -= 0.005f;            
         }
 
-        if (move) 
+        if (Input.GetKey(KeyCode.H) && powerAmount > 0)
         {
-            if (active) 
-            {
-                timer += (Time.deltaTime * 0.4f);
-                player.transform.position -= transform.right * Mathf.Lerp(0, 1, Mathf.Sin(timer * 0.1f));
-                if (player.transform.position.x <= -screenHalfWidth - (screenHalfWidth - initPlayerPositionX - 2))
-                {
-                    active = false;
-                }
-            } else
-            {
-                player.transform.position += ROPE_SPEED;
-                if (player.transform.position.x >= screenHalfWidth + (screenHalfWidth - initPlayerPositionX - 3))
-                {
-                    active = true;
-                    move = false;
-                }
-            }
+            powerAmount -= 0.005f;
+            playerSpeed.x += 0.005f;
         }
+       
+        if (player.transform.position.x < -2)
+        {
+            player.transform.position = new Vector3((screenHalfWidth * 2) - 2, -1.5f);
+        }
+           
+        if (player.transform.position.x > (screenHalfWidth * 2) - 2)
+        {
+            player.transform.position = new Vector3(-2, -1.5f);
+        }
+
+        if (playerSpeed.x >= MAX_POWER)
+        {
+            playerSpeed.x = MAX_POWER;
+        }
+
+        if (playerSpeed.x <= MIN_POWER)
+        {
+            playerSpeed.x = MIN_POWER;
+        }
+
+        player.transform.position += playerSpeed;
+
     }
 
     void InitLabels() {
-        GameObject canvasObject = GameObject.FindGameObjectWithTag("PowerCanvas");
-        Transform textTr = canvasObject.transform.Find("Power");
-        powerAmount = textTr.GetComponent<Text>();
-        textTr = canvasObject.transform.Find("Points");
-        pointsAmount = textTr.GetComponent<Text>();
+        GameObject canvasObject = GameObject.FindGameObjectWithTag("TextCanvas");
+        Transform textTr = canvasObject.transform.Find("PowerLeft");
+        powerLeft = textTr.GetComponent<Text>();
         textTr = canvasObject.transform.Find("GameOver");
         gameOver = textTr.GetComponent<Text>();
     }
