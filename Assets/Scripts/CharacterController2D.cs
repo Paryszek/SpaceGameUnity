@@ -10,8 +10,8 @@ public class CharacterController2D : MonoBehaviour {
 
     private Text powerLeft;
 
-    private float MAX_POWER = 0.15f;
-    private float MIN_POWER = -0.15f;
+    private float MAX_POWER = 0.12f;
+    private float MIN_POWER = -0.12f;
 
     private float screenHalfWidth;
     private float powerAmount = 0.6f;
@@ -32,6 +32,7 @@ public class CharacterController2D : MonoBehaviour {
         if (col.gameObject.tag == "Bonus")
         { 
             powerAmount += 0.09f;
+            powerAmount = powerAmount > initPower ? initPower : powerAmount;
             Destroy(col.gameObject);
         }
 
@@ -39,7 +40,7 @@ public class CharacterController2D : MonoBehaviour {
 
     void Update ()
     {        
-        powerLeft.text = powerAmount > 0 ? (powerAmount * 100 / initPower).ToString() + '%' : "0%";
+        powerLeft.text = powerAmount > 0 ? Mathf.RoundToInt((powerAmount * 100 / initPower)).ToString() + '%' : "0%";
 
         if (Input.GetKey(KeyCode.LeftArrow) && powerAmount > 0)
         {
