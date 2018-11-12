@@ -13,7 +13,6 @@ public class BonusMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position += new Vector3(Input.GetAxis("Horizontal"), 0, 0);
         if (transform.localPosition.y < -15)
         {
             Destroy(this.gameObject);

@@ -13,7 +13,6 @@ public class Movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position += new Vector3(Input.GetAxis("Horizontal"), 0, 0);
         if (transform.localPosition.y < -15)
         {
             Destroy(this.gameObject);
@@ -26,6 +25,8 @@ public class Movement : MonoBehaviour
         {
             Destroy(col.gameObject);
             CharacterController2D.gameOver.text = "Game Over";
+            CharacterController2D.secondsText.text = "Secounds survived";
+            CharacterController2D.seconds.text = Mathf.RoundToInt(Time.time).ToString();
         }
 
     }

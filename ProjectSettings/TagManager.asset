@@ -9,6 +9,8 @@ TagManager:
   - PowerLeft
   - GameOver
   - TextCanvas
+  - SecondsText
+  - Seconds
   layers:
   - Default
   - TransparentFX

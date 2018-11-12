@@ -5,72 +5,68 @@ using UnityEngine.UI;
 
 public class CharacterController2D : MonoBehaviour {
     public static Text gameOver;
+    public static Text secondsText;
+    public static Text seconds;
 
-    private float MAX_POWER = 0.06f;
-    private float MIN_POWER = -0.06f;
+    private Text powerLeft;
+
+    private float MAX_POWER = 0.15f;
+    private float MIN_POWER = -0.15f;
 
     private float screenHalfWidth;
-    private Rigidbody2D player;
+    private float powerAmount = 0.6f;
+    private float initPower;
+    private float time;
     private Vector3 playerSpeed = new Vector3(0, 0);
-    private float powerAmount = 0.2f;
-    Text powerLeft;
 
     void Start()
     {
-        player = GetComponent<Rigidbody2D>();
-        screenHalfWidth = Camera.main.aspect * Camera.main.orthographicSize;
+        float halfPlayerWidth = transform.localScale.x / 2f;
+        screenHalfWidth = Camera.main.aspect * Camera.main.orthographicSize + halfPlayerWidth;
+        initPower = powerAmount;
         InitLabels();
-
     }
 
     void OnCollisionEnter2D(Collision2D col)
     {
         if (col.gameObject.tag == "Bonus")
-        {
-            powerAmount += 0.08f;
+        { 
+            powerAmount += 0.09f;
             Destroy(col.gameObject);
         }
 
     }
 
     void Update ()
-    {
+    {        
+        powerLeft.text = powerAmount > 0 ? (powerAmount * 100 / initPower).ToString() + '%' : "0%";
 
-        powerLeft.text = (powerAmount * 100 / 0.2f).ToString() + '%';
-
-        if (Input.GetKey(KeyCode.G) && powerAmount > 0)
+        if (Input.GetKey(KeyCode.LeftArrow) && powerAmount > 0)
         {
             powerAmount -= 0.005f;
             playerSpeed.x -= 0.005f;            
         }
 
-        if (Input.GetKey(KeyCode.H) && powerAmount > 0)
+        if (Input.GetKey(KeyCode.RightArrow) && powerAmount > 0)
         {
             powerAmount -= 0.005f;
             playerSpeed.x += 0.005f;
         }
        
-        if (player.transform.position.x < -2)
+        if (transform.position.x < -screenHalfWidth)
         {
-            player.transform.position = new Vector3((screenHalfWidth * 2) - 2, -1.5f);
+            transform.position = new Vector3(screenHalfWidth, transform.position.y);
         }
            
-        if (player.transform.position.x > (screenHalfWidth * 2) - 2)
+        if (transform.position.x > screenHalfWidth)
         {
-            player.transform.position = new Vector3(-2, -1.5f);
+            transform.position = new Vector3(-screenHalfWidth, transform.position.y);
         }
 
-        if (playerSpeed.x >= MAX_POWER)
-        {
-            playerSpeed.x = MAX_POWER;
-        }
+        powerAmount = powerAmount > MAX_POWER ? MAX_POWER : powerAmount;
+        powerAmount = powerAmount < MIN_POWER ? MIN_POWER : powerAmount;
 
-        if (playerSpeed.x <= MIN_POWER)
-        {
-            playerSpeed.x = MIN_POWER;
-        }
-
-        player.transform.position += playerSpeed;
+        transform.position += playerSpeed;
 
     }
 
@@ -80,6 +76,10 @@ public class CharacterController2D : MonoBehaviour {
         powerLeft = textTr.GetComponent<Text>();
         textTr = canvasObject.transform.Find("GameOver");
         gameOver = textTr.GetComponent<Text>();
+        textTr = canvasObject.transform.Find("SecondsText");
+        secondsText = textTr.GetComponent<Text>();
+        textTr = canvasObject.transform.Find("Seconds");
+        seconds = textTr.GetComponent<Text>();
     }
 
 
