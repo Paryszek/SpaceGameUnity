@@ -7,6 +7,9 @@ public class CharacterController2D : MonoBehaviour {
     public static Text gameOver;
     public static Text secondsText;
     public static Text seconds;
+    public static Button restartGameButton;
+    public static Vector3 restartGameButtonInit;
+    public static float time;
 
     private Text powerLeft;
 
@@ -16,15 +19,17 @@ public class CharacterController2D : MonoBehaviour {
     private float screenHalfWidth;
     private float powerAmount = 0.6f;
     private float initPower;
-    private float time;
     private Vector3 playerSpeed = new Vector3(0, 0);
+
+    private bool restartGame = false;
 
     void Start()
     {
+        time = Time.time;
         float halfPlayerWidth = transform.localScale.x / 2f;
         screenHalfWidth = Camera.main.aspect * Camera.main.orthographicSize + halfPlayerWidth;
         initPower = powerAmount;
-        InitLabels();
+        InitLabels();        
     }
 
     void OnCollisionEnter2D(Collision2D col)
@@ -39,7 +44,8 @@ public class CharacterController2D : MonoBehaviour {
     }
 
     void Update ()
-    {        
+    {
+        time += Time.deltaTime;
         powerLeft.text = powerAmount > 0 ? Mathf.RoundToInt((powerAmount * 100 / initPower)).ToString() + '%' : "0%";
 
         if (Input.GetKey(KeyCode.LeftArrow) && powerAmount > 0)
@@ -81,6 +87,16 @@ public class CharacterController2D : MonoBehaviour {
         secondsText = textTr.GetComponent<Text>();
         textTr = canvasObject.transform.Find("Seconds");
         seconds = textTr.GetComponent<Text>();
+        textTr = canvasObject.transform.Find("Button");
+        restartGameButton = textTr.GetComponent<Button>();
+        restartGameButton.onClick.AddListener(HandleClick);
+        restartGameButtonInit = new Vector3(restartGameButton.transform.position.x, restartGameButton.transform.position.y, 0);
+        restartGameButton.transform.position = new Vector3(-500, -500);
+    }
+
+    public void HandleClick()
+    {
+        Application.LoadLevel(Application.loadedLevel);
     }
 
 
