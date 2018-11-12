@@ -63,8 +63,8 @@ public class CharacterController2D : MonoBehaviour {
             transform.position = new Vector3(-screenHalfWidth, transform.position.y);
         }
 
-        powerAmount = powerAmount > MAX_POWER ? MAX_POWER : powerAmount;
-        powerAmount = powerAmount < MIN_POWER ? MIN_POWER : powerAmount;
+        playerSpeed.x = playerSpeed.x > MAX_POWER ? MAX_POWER : playerSpeed.x;
+        playerSpeed.x = playerSpeed.x < MIN_POWER ? MIN_POWER : playerSpeed.x;
 
         transform.position += playerSpeed;
 
