@@ -19,7 +19,7 @@ public class Bonus : MonoBehaviour
     {
         if (CharacterController2D.gameOver.text != "Game Over") 
 		{
-            bonus = Instantiate(bonus, new Vector3(Random.Range(-5, 3), 15, 0), Quaternion.identity);
+            bonus = Instantiate(bonus, new Vector3(Random.Range(-screenHalfWidth, screenHalfWidth), 15, 0), Quaternion.identity);
             bonus.name = "Bonus";
         }
     }
