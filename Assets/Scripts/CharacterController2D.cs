@@ -94,7 +94,7 @@ public class CharacterController2D : MonoBehaviour {
         restartGameButton.transform.position = new Vector3(-500, -500);
     }
 
-    public void HandleClick()
+    public static void HandleClick()
     {
         Application.LoadLevel(Application.loadedLevel);
     }
