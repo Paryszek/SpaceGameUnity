@@ -16,6 +16,9 @@ public class CharacterController2D : MonoBehaviour {
     private float MAX_POWER = 0.12f;
     private float MIN_POWER = -0.12f;
 
+    private Button leftButton;
+    private Button rightButton;
+
     private float screenHalfWidth;
     private float powerAmount = 0.6f;
     private float initPower;
@@ -92,11 +95,35 @@ public class CharacterController2D : MonoBehaviour {
         restartGameButton.onClick.AddListener(HandleClick);
         restartGameButtonInit = new Vector3(restartGameButton.transform.position.x, restartGameButton.transform.position.y, 0);
         restartGameButton.transform.position = new Vector3(-500, -500);
+        textTr = canvasObject.transform.Find("LeftButton");
+        leftButton = textTr.GetComponent<Button>();
+        leftButton.onClick.AddListener(LeftClick);
+        textTr = canvasObject.transform.Find("RightButton");
+        rightButton = textTr.GetComponent<Button>();
+        rightButton.onClick.AddListener(RightClick);
     }
 
     public static void HandleClick()
     {
         Application.LoadLevel(Application.loadedLevel);
+    }
+
+    public void LeftClick()
+    {
+        if (powerAmount > 0)
+        {
+            powerAmount -= 0.005f;
+            playerSpeed.x -= 0.005f;            
+        }
+    }
+
+    public void RightClick()
+    {
+        if (powerAmount > 0)
+        {
+            powerAmount -= 0.005f;
+            playerSpeed.x += 0.005f;
+        }
     }
 
 
