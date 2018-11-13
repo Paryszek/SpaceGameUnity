@@ -112,8 +112,8 @@ public class CharacterController2D : MonoBehaviour {
     {
         if (powerAmount > 0)
         {
-            powerAmount -= 0.005f;
-            playerSpeed.x -= 0.005f;            
+            powerAmount -= 0.01f;
+            playerSpeed.x -= 0.01f;            
         }
     }
 
@@ -121,8 +121,8 @@ public class CharacterController2D : MonoBehaviour {
     {
         if (powerAmount > 0)
         {
-            powerAmount -= 0.005f;
-            playerSpeed.x += 0.005f;
+            powerAmount -= 0.01f;
+            playerSpeed.x += 0.01f;
         }
     }
 
