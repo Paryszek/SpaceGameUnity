@@ -11,6 +11,9 @@ public class CharacterController2D : MonoBehaviour {
     public static Vector3 restartGameButtonInit;
     public static float time;
 
+    public ParticleSystem particleLeft;
+    public ParticleSystem particleRight;
+
     private Text powerLeft;
 
     private float MAX_POWER = 0.12f;
@@ -32,7 +35,11 @@ public class CharacterController2D : MonoBehaviour {
         float halfPlayerWidth = transform.localScale.x / 2f;
         screenHalfWidth = Camera.main.aspect * Camera.main.orthographicSize + halfPlayerWidth;
         initPower = powerAmount;
-        InitLabels();        
+        InitLabels();
+        particleLeft = GameObject.Find("Particle Left").GetComponent<ParticleSystem>();
+        particleLeft.Stop();
+        particleRight = GameObject.Find("Particle Right").GetComponent<ParticleSystem>();
+        particleRight.Stop();
     }
 
     void OnCollisionEnter2D(Collision2D col)
@@ -54,15 +61,35 @@ public class CharacterController2D : MonoBehaviour {
         if (Input.GetKey(KeyCode.LeftArrow) && powerAmount > 0)
         {
             powerAmount -= 0.005f;
-            playerSpeed.x -= 0.005f;            
+            playerSpeed.x -= 0.005f;
+            
+
         }
+
+        if (Input.GetKeyUp(KeyCode.LeftArrow))
+        {
+            particleLeft.Stop();
+        } else if (Input.GetKeyDown(KeyCode.LeftArrow) && powerAmount > 0)
+        {
+            particleLeft.Play();
+        }
+
 
         if (Input.GetKey(KeyCode.RightArrow) && powerAmount > 0)
         {
             powerAmount -= 0.005f;
             playerSpeed.x += 0.005f;
         }
-       
+
+        if (Input.GetKeyUp(KeyCode.RightArrow))
+        {
+            particleRight.Stop();
+        }
+        else if (Input.GetKeyDown(KeyCode.RightArrow) && powerAmount > 0)
+        {
+            particleRight.Play();
+        }
+
         if (transform.position.x < -screenHalfWidth)
         {
             transform.position = new Vector3(screenHalfWidth, transform.position.y);
@@ -96,11 +123,11 @@ public class CharacterController2D : MonoBehaviour {
         restartGameButtonInit = new Vector3(restartGameButton.transform.position.x, restartGameButton.transform.position.y, 0);
         restartGameButton.transform.position = new Vector3(-500, -500);
         textTr = canvasObject.transform.Find("LeftButton");
-        leftButton = textTr.GetComponent<Button>();
-        leftButton.onClick.AddListener(LeftClick);
+        //leftButton = textTr.GetComponent<Button>();
+        //leftButton.onClick.AddListener(LeftClick);
         textTr = canvasObject.transform.Find("RightButton");
-        rightButton = textTr.GetComponent<Button>();
-        rightButton.onClick.AddListener(RightClick);
+        //rightButton = textTr.GetComponent<Button>();
+        //rightButton.onClick.AddListener(RightClick);
     }
 
     public static void HandleClick()
@@ -113,8 +140,9 @@ public class CharacterController2D : MonoBehaviour {
         if (powerAmount > 0)
         {
             powerAmount -= 0.01f;
-            playerSpeed.x -= 0.01f;            
+            playerSpeed.x -= 0.01f;
         }
+        
     }
 
     public void RightClick()
@@ -124,6 +152,8 @@ public class CharacterController2D : MonoBehaviour {
             powerAmount -= 0.01f;
             playerSpeed.x += 0.01f;
         }
+
+
     }
 
 
