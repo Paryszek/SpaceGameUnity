@@ -31,15 +31,12 @@ public class CharacterController2D : MonoBehaviour {
 
     void Start()
     {
-        time = Time.time;
-        float halfPlayerWidth = transform.localScale.x / 2f;
-        screenHalfWidth = Camera.main.aspect * Camera.main.orthographicSize + halfPlayerWidth;
+        time = Time.time;        
         initPower = powerAmount;
+        InitScreenWidth();
         InitLabels();
-        particleLeft = GameObject.Find("Particle Left").GetComponent<ParticleSystem>();
-        particleLeft.Stop();
-        particleRight = GameObject.Find("Particle Right").GetComponent<ParticleSystem>();
-        particleRight.Stop();
+        InitButtons();
+        InitParticles();        
     }
 
     void OnCollisionEnter2D(Collision2D col)
@@ -61,9 +58,7 @@ public class CharacterController2D : MonoBehaviour {
         if (Input.GetKey(KeyCode.LeftArrow) && powerAmount > 0)
         {
             powerAmount -= 0.005f;
-            playerSpeed.x -= 0.005f;
-            
-
+            playerSpeed.x -= 0.005f;           
         }
 
         if (Input.GetKeyUp(KeyCode.LeftArrow))
@@ -109,52 +104,71 @@ public class CharacterController2D : MonoBehaviour {
 
     void InitLabels() {
         GameObject canvasObject = GameObject.FindGameObjectWithTag("TextCanvas");
-        Transform textTr = canvasObject.transform.Find("PowerLeft");
-        powerLeft = textTr.GetComponent<Text>();
-        textTr = canvasObject.transform.Find("GameOver");
-        gameOver = textTr.GetComponent<Text>();
-        textTr = canvasObject.transform.Find("SecondsText");
-        secondsText = textTr.GetComponent<Text>();
-        textTr = canvasObject.transform.Find("Seconds");
-        seconds = textTr.GetComponent<Text>();
-        textTr = canvasObject.transform.Find("Button");
-        restartGameButton = textTr.GetComponent<Button>();
-        restartGameButton.onClick.AddListener(HandleClick);
+        Transform transform = canvasObject.transform.Find("PowerLeft");
+        powerLeft = transform.GetComponent<Text>();
+        transform = canvasObject.transform.Find("GameOver");
+        gameOver = transform.GetComponent<Text>();
+        transform = canvasObject.transform.Find("SecondsText");
+        secondsText = transform.GetComponent<Text>();
+        transform = canvasObject.transform.Find("Seconds");
+        seconds = transform.GetComponent<Text>();        
+        
+    }
+
+    void InitButtons()
+    {
+        GameObject canvasObject = GameObject.FindGameObjectWithTag("TextCanvas");
+        Transform transform = canvasObject.transform.Find("RestartButton");
+        restartGameButton = transform.GetComponent<Button>();
+        restartGameButton.onClick.AddListener(RestartClick);
         restartGameButtonInit = new Vector3(restartGameButton.transform.position.x, restartGameButton.transform.position.y, 0);
         restartGameButton.transform.position = new Vector3(-500, -500);
-        textTr = canvasObject.transform.Find("LeftButton");
+        transform = canvasObject.transform.Find("LeftButton");
         //leftButton = textTr.GetComponent<Button>();
         //leftButton.onClick.AddListener(LeftClick);
-        textTr = canvasObject.transform.Find("RightButton");
+        transform = canvasObject.transform.Find("RightButton");
         //rightButton = textTr.GetComponent<Button>();
         //rightButton.onClick.AddListener(RightClick);
     }
 
-    public static void HandleClick()
+    void InitParticles()
+    {
+        particleLeft = GameObject.Find("Particle Left").GetComponent<ParticleSystem>();
+        particleLeft.Stop();
+        particleRight = GameObject.Find("Particle Right").GetComponent<ParticleSystem>();
+        particleRight.Stop();
+    }
+
+    void InitScreenWidth()
+    {
+        float halfPlayerWidth = transform.localScale.x / 2f;
+        screenHalfWidth = Camera.main.aspect * Camera.main.orthographicSize + halfPlayerWidth;
+    }
+
+    public static void RestartClick()
     {
         Application.LoadLevel(Application.loadedLevel);
     }
 
-    public void LeftClick()
-    {
-        if (powerAmount > 0)
-        {
-            powerAmount -= 0.01f;
-            playerSpeed.x -= 0.01f;
-        }
+    //Android build
+    //public void LeftClick()
+    //{
+    //    if (powerAmount > 0)
+    //    {
+    //        powerAmount -= 0.01f;
+    //        playerSpeed.x -= 0.01f;
+    //    }
         
-    }
+    //}
 
-    public void RightClick()
-    {
-        if (powerAmount > 0)
-        {
-            powerAmount -= 0.01f;
-            playerSpeed.x += 0.01f;
-        }
-
-
-    }
+    //public void RightClick()
+    //{
+    //    if (powerAmount > 0)
+    //    {
+    //        powerAmount -= 0.01f;
+    //        playerSpeed.x += 0.01f;
+    //    }
+    //}
 
 
 }

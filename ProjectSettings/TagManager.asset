@@ -11,9 +11,9 @@ TagManager:
   - TextCanvas
   - SecondsText
   - Seconds
-  - Button
   - LeftButton
   - RightButton
+  - RestartButton
   layers:
   - Default
   - TransparentFX

@@ -10,9 +10,8 @@ public class Bonus : MonoBehaviour
 
     void Start()
     {
-        InvokeRepeating("Spawn", 0.01f, 3f);
-        float halfBonusWidth = transform.localScale.x / 2f;
-        screenHalfWidth = Camera.main.aspect * Camera.main.orthographicSize + halfBonusWidth;
+        InvokeRepeating("Spawn", 0.01f, 2f);
+        InitScreenWidth();
     }
 
     void Spawn()
@@ -22,6 +21,12 @@ public class Bonus : MonoBehaviour
             bonus = Instantiate(bonus, new Vector3(Random.Range(-screenHalfWidth, screenHalfWidth), 15, 0), Quaternion.identity);
             bonus.name = "Bonus";
         }
+    }
+
+    void InitScreenWidth()
+    {
+        float halfCubeWidth = transform.localScale.x / 2f;
+        screenHalfWidth = Camera.main.aspect * Camera.main.orthographicSize + halfCubeWidth;
     }
 
 }

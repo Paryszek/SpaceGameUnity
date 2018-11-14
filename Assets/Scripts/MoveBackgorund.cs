@@ -13,12 +13,11 @@ public class MoveBackgorund : MonoBehaviour {
     {
         material = GetComponent<Renderer>().material;
     }
-    // Use this for initialization
+
     void Start () {
         offset = new Vector2(xVelocity, yVelocity);
 	}
 	
-	// Update is called once per frame
 	void Update () {
         material.mainTextureOffset += offset * Time.deltaTime;
 	}
