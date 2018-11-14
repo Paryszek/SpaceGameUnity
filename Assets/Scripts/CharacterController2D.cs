@@ -31,7 +31,7 @@ public class CharacterController2D : MonoBehaviour {
 
     void Start()
     {
-        time = Time.time;        
+        time = 0f;        
         initPower = powerAmount;
         InitScreenWidth();
         InitLabels();
