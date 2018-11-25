@@ -44,7 +44,7 @@ public class Movement : MonoBehaviour
             CharacterController2D.time = 0f;
         } else if (col.gameObject.tag == "Shield")
         {
-
+            Destroy(this);
         }
     }
 

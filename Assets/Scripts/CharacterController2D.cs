@@ -14,8 +14,8 @@ public class CharacterController2D : MonoBehaviour {
     public GameObject shield;
     public float shieldLifeTime;
 
-    public ParticleSystem particleLeft;
-    public ParticleSystem particleRight;
+    private ParticleSystem particleLeft;
+    private ParticleSystem particleRight;
 
     private Text powerLeft;
 
@@ -26,7 +26,7 @@ public class CharacterController2D : MonoBehaviour {
     private Button rightButton;
 
     private float screenHalfWidth;
-    private float powerAmount = 0.6f;
+    private float powerAmount = 5.6f;
     private float initPower;
     private Vector3 playerSpeed = new Vector3(0, 0);
 
