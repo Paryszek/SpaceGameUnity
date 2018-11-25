@@ -11,6 +11,9 @@ public class CharacterController2D : MonoBehaviour {
     public static Vector3 restartGameButtonInit;
     public static float time;
 
+    public GameObject shield;
+    public float shieldLifeTime;
+
     public ParticleSystem particleLeft;
     public ParticleSystem particleRight;
 
@@ -36,7 +39,9 @@ public class CharacterController2D : MonoBehaviour {
         InitScreenWidth();
         InitLabels();
         InitButtons();
-        InitParticles();        
+        InitParticles();
+        shield.SetActive(false);
+
     }
 
     void OnCollisionEnter2D(Collision2D col)
@@ -46,9 +51,30 @@ public class CharacterController2D : MonoBehaviour {
             powerAmount += 0.09f;
             powerAmount = powerAmount > initPower ? initPower : powerAmount;
             Destroy(col.gameObject);
+        } else if (col.gameObject.tag == "Shield Bonus")
+        {
+            shield.SetActive(true);
+            GetComponent<BoxCollider2D>().enabled = false;
+            GetComponent<CircleCollider2D>().enabled = true;
+            tag = "Shield";
+            Destroy(col.gameObject);
+
+            StartCoroutine(StopShield(shieldLifeTime));
+
         }
 
     }
+
+    IEnumerator StopShield(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        shield.SetActive(false);
+        shield.SetActive(false);
+        GetComponent<CircleCollider2D>().enabled = false;
+        GetComponent<BoxCollider2D>().enabled = true;
+        tag = "Player";
+    }
+
 
     void Update ()
     {

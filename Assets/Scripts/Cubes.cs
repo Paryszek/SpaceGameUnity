@@ -56,7 +56,7 @@ public class Cubes : MonoBehaviour {
                 InvokeRepeating("Spawn", 2f, 0.83f);
             }
 
-            Instantiate(cube, new Vector3(Random.Range(-screenHalfWidth - 1, screenHalfWidth + 1), 15, 0), Quaternion.identity);
+            cube = Instantiate(cube, new Vector3(Random.Range(-screenHalfWidth - 1, screenHalfWidth + 1), 15, 0), Quaternion.identity);
 			cube.name = "Cube";
 		}
 	}
