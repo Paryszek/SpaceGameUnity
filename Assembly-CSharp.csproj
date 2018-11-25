@@ -65,6 +65,7 @@
     <Compile Include="Assets\Scripts\BonusMovement.cs" />
     <Compile Include="Assets\Scripts\CharacterController2D.cs" />
     <Compile Include="Assets\Scripts\Cubes.cs" />
+    <Compile Include="Assets\Scripts\MenuManager.cs" />
     <Compile Include="Assets\Scripts\MoveBackgorund.cs" />
     <Compile Include="Assets\Scripts\Movement.cs" />
     <Reference Include="UnityEditor.StandardEvents">
