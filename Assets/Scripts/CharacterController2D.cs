@@ -11,6 +11,8 @@ public class CharacterController2D : MonoBehaviour {
     public static Vector3 restartGameButtonInit;
     public static float time;
 
+    public string horizontalAxis = "Horizontal";
+
     public GameObject shield;
     public float shieldLifeTime;
 
@@ -18,6 +20,8 @@ public class CharacterController2D : MonoBehaviour {
     private ParticleSystem particleRight;
 
     private Text powerLeft;
+
+    private bool stopParticlePlay = false;
 
     private float MAX_POWER = 0.12f;
     private float MIN_POWER = -0.12f;
@@ -81,35 +85,21 @@ public class CharacterController2D : MonoBehaviour {
         time += Time.deltaTime;
         powerLeft.text = powerAmount > 0 ? Mathf.RoundToInt((powerAmount * 100 / initPower)).ToString() + '%' : "0%";
 
-        if (Input.GetKey(KeyCode.LeftArrow) && powerAmount > 0)
+        if (SimpleInput.GetAxis(horizontalAxis) < 0 && powerAmount > 0)
         {
-            powerAmount -= 0.005f;
-            playerSpeed.x -= 0.005f;           
-        }
-
-        if (Input.GetKeyUp(KeyCode.LeftArrow))
-        {
-            particleLeft.Stop();
-        } else if (Input.GetKeyDown(KeyCode.LeftArrow) && powerAmount > 0)
-        {
+            powerAmount -= 0.0005f;
+            playerSpeed.x -= 0.0005f;
             particleLeft.Play();
-        }
-
-
-        if (Input.GetKey(KeyCode.RightArrow) && powerAmount > 0)
-        {
-            powerAmount -= 0.005f;
-            playerSpeed.x += 0.005f;
-        }
-
-        if (Input.GetKeyUp(KeyCode.RightArrow))
-        {
             particleRight.Stop();
         }
-        else if (Input.GetKeyDown(KeyCode.RightArrow) && powerAmount > 0)
+
+        if (SimpleInput.GetAxis(horizontalAxis) > 0 && powerAmount > 0)
         {
+            powerAmount -= 0.0005f;
+            playerSpeed.x += 0.0005f;
             particleRight.Play();
-        }
+            particleLeft.Stop();
+        }    
 
         if (transform.position.x < -screenHalfWidth)
         {
