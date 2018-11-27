@@ -17,6 +17,8 @@ public class CharacterController2D : MonoBehaviour {
     public GameObject shield;
     public float shieldLifeTime;
 
+    public Image powerBar;
+
     private ParticleSystem particleLeft;
     private ParticleSystem particleRight;
 
@@ -50,7 +52,7 @@ public class CharacterController2D : MonoBehaviour {
     {
         if (col.gameObject.tag == "Bonus")
         { 
-            powerAmount += 0.09f;            
+            powerAmount += 0.09f;
             powerAmount = powerAmount > initPower ? initPower : powerAmount;            
             Destroy(col.gameObject);
         } else if (col.gameObject.tag == "Shield Bonus")
@@ -81,22 +83,20 @@ public class CharacterController2D : MonoBehaviour {
     void Update ()
     {
         time += Time.deltaTime;
-        //powerLeft.text = powerAmount > 0 ? Mathf.RoundToInt((powerAmount * 100 / initPower)).ToString() + '%' : "0%";        
+        HandlePowerBar();
 
         if (SimpleInput.GetAxis(horizontalAxis) < 0 && powerAmount > 0)
         {
-            powerAmount -= 0.0005f;
-            playerSpeed.x -= 0.0005f;
+            powerAmount -= 0.005f;
+            playerSpeed.x -= 0.005f;            
             particleLeft.Play();
-            particleRight.Stop();
         }
 
         if (SimpleInput.GetAxis(horizontalAxis) > 0 && powerAmount > 0)
         {
-            powerAmount -= 0.0005f;
-            playerSpeed.x += 0.0005f;
+            powerAmount -= 0.005f;
+            playerSpeed.x += 0.005f;
             particleRight.Play();
-            particleLeft.Stop();
         }    
 
         if (transform.position.x < -screenHalfWidth)
@@ -116,7 +116,18 @@ public class CharacterController2D : MonoBehaviour {
 
     }
 
-    void InitLabels() {
+    public static void RestartClick()
+    {
+        Application.LoadLevel(Application.loadedLevel);
+    }
+
+    private void HandlePowerBar()
+    {
+        var powerProcent = powerAmount * 100 / initPower;
+        powerBar.fillAmount = powerProcent / 100;
+    }
+
+    private void InitLabels() {
         GameObject canvasObject = GameObject.FindGameObjectWithTag("TextCanvas");
         Transform transform = canvasObject.transform.Find("GameOver");
         gameOver = transform.GetComponent<Text>();
@@ -127,7 +138,7 @@ public class CharacterController2D : MonoBehaviour {
         
     }
 
-    void InitButtons()
+    private void InitButtons()
     {
         GameObject canvasObject = GameObject.FindGameObjectWithTag("TextCanvas");
         Transform transform = canvasObject.transform.Find("RestartButton");
@@ -138,7 +149,7 @@ public class CharacterController2D : MonoBehaviour {
 
     }
 
-    void InitParticles()
+    private void InitParticles()
     {
         particleLeft = GameObject.Find("Particle Left").GetComponent<ParticleSystem>();
         particleLeft.Stop();
@@ -146,15 +157,10 @@ public class CharacterController2D : MonoBehaviour {
         particleRight.Stop();
     }
 
-    void InitScreenWidth()
+    private void InitScreenWidth()
     {
         float halfPlayerWidth = transform.localScale.x / 2f;
         screenHalfWidth = Camera.main.aspect * Camera.main.orthographicSize + halfPlayerWidth;
-    }
-
-    public static void RestartClick()
-    {
-        Application.LoadLevel(Application.loadedLevel);
     }
 
 }

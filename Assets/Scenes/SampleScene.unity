@@ -11490,6 +11490,7 @@ MonoBehaviour:
   horizontalAxis: Horizontal
   shield: {fileID: 1108322875}
   shieldLifeTime: 10
+  powerBar: {fileID: 308810811}
 --- !u!61 &1602262260
 BoxCollider2D:
   m_ObjectHideFlags: 0
