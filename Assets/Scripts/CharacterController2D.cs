@@ -10,6 +10,7 @@ public class CharacterController2D : MonoBehaviour {
     public static Button restartGameButton;
     public static Vector3 restartGameButtonInit;
     public static float time;
+    public static float powerAmount = 5.6f;     
 
     public string horizontalAxis = "Horizontal";
 
@@ -18,8 +19,6 @@ public class CharacterController2D : MonoBehaviour {
 
     private ParticleSystem particleLeft;
     private ParticleSystem particleRight;
-
-    private Text powerLeft;
 
     private bool stopParticlePlay = false;
 
@@ -30,7 +29,6 @@ public class CharacterController2D : MonoBehaviour {
     private Button rightButton;
 
     private float screenHalfWidth;
-    private float powerAmount = 5.6f;
     private float initPower;
     private Vector3 playerSpeed = new Vector3(0, 0);
 
@@ -44,7 +42,7 @@ public class CharacterController2D : MonoBehaviour {
         InitLabels();
         InitButtons();
         InitParticles();
-        shield.SetActive(false);
+        shield.SetActive(false);       
 
     }
 
@@ -52,8 +50,8 @@ public class CharacterController2D : MonoBehaviour {
     {
         if (col.gameObject.tag == "Bonus")
         { 
-            powerAmount += 0.09f;
-            powerAmount = powerAmount > initPower ? initPower : powerAmount;
+            powerAmount += 0.09f;            
+            powerAmount = powerAmount > initPower ? initPower : powerAmount;            
             Destroy(col.gameObject);
         } else if (col.gameObject.tag == "Shield Bonus")
         {
@@ -83,7 +81,7 @@ public class CharacterController2D : MonoBehaviour {
     void Update ()
     {
         time += Time.deltaTime;
-        powerLeft.text = powerAmount > 0 ? Mathf.RoundToInt((powerAmount * 100 / initPower)).ToString() + '%' : "0%";
+        //powerLeft.text = powerAmount > 0 ? Mathf.RoundToInt((powerAmount * 100 / initPower)).ToString() + '%' : "0%";        
 
         if (SimpleInput.GetAxis(horizontalAxis) < 0 && powerAmount > 0)
         {
@@ -120,9 +118,7 @@ public class CharacterController2D : MonoBehaviour {
 
     void InitLabels() {
         GameObject canvasObject = GameObject.FindGameObjectWithTag("TextCanvas");
-        Transform transform = canvasObject.transform.Find("PowerLeft");
-        powerLeft = transform.GetComponent<Text>();
-        transform = canvasObject.transform.Find("GameOver");
+        Transform transform = canvasObject.transform.Find("GameOver");
         gameOver = transform.GetComponent<Text>();
         transform = canvasObject.transform.Find("SecondsText");
         secondsText = transform.GetComponent<Text>();
@@ -139,12 +135,7 @@ public class CharacterController2D : MonoBehaviour {
         restartGameButton.onClick.AddListener(RestartClick);
         restartGameButtonInit = new Vector3(restartGameButton.transform.position.x, restartGameButton.transform.position.y, 0);
         restartGameButton.transform.position = new Vector3(-500, -500);
-        transform = canvasObject.transform.Find("LeftButton");
-        //leftButton = textTr.GetComponent<Button>();
-        //leftButton.onClick.AddListener(LeftClick);
-        transform = canvasObject.transform.Find("RightButton");
-        //rightButton = textTr.GetComponent<Button>();
-        //rightButton.onClick.AddListener(RightClick);
+
     }
 
     void InitParticles()
@@ -165,26 +156,5 @@ public class CharacterController2D : MonoBehaviour {
     {
         Application.LoadLevel(Application.loadedLevel);
     }
-
-    //Android build
-    //public void LeftClick()
-    //{
-    //    if (powerAmount > 0)
-    //    {
-    //        powerAmount -= 0.01f;
-    //        playerSpeed.x -= 0.01f;
-    //    }
-        
-    //}
-
-    //public void RightClick()
-    //{
-    //    if (powerAmount > 0)
-    //    {
-    //        powerAmount -= 0.01f;
-    //        playerSpeed.x += 0.01f;
-    //    }
-    //}
-
 
 }
