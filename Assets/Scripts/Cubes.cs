@@ -18,42 +18,42 @@ public class Cubes : MonoBehaviour {
 		    var time = CharacterController2D.time;
             if (Mathf.RoundToInt(time) == 10)
             {
-                InvokeRepeating("Spawn", 2f, 0.99f);
+                InvokeRepeating("Spawn", 2f, 0.995f);
             }
 
             if (Mathf.RoundToInt(time) == 30)
             {
-                InvokeRepeating("Spawn", 2f, 0.97f);
+                InvokeRepeating("Spawn", 2f, 0.985f);
             }
 
             if (Mathf.RoundToInt(time) == 70)
             {
-                InvokeRepeating("Spawn", 2f, 0.95f);
+                InvokeRepeating("Spawn", 2f, 0.98f);
             }
 
             if (Mathf.RoundToInt(time) == 150)
             {
-                InvokeRepeating("Spawn", 2f, 0.92f);
+                InvokeRepeating("Spawn", 2f, 0.96f);
             }
 
             if (Mathf.RoundToInt(time) == 310)
             {
-                InvokeRepeating("Spawn", 2f, 0.9f);
+                InvokeRepeating("Spawn", 2f, 0.95f);
             }
 
             if (Mathf.RoundToInt(time) == 610)
             {
-                InvokeRepeating("Spawn", 2f, 0.87f);
+                InvokeRepeating("Spawn", 2f, 0.94f);
             }
 
             if (Mathf.RoundToInt(time) == 1210)
             {
-                InvokeRepeating("Spawn", 2f, 0.85f);
+                InvokeRepeating("Spawn", 2f, 0.93f);
             }
 
             if (Mathf.RoundToInt(time) == 2410)
             {
-                InvokeRepeating("Spawn", 2f, 0.83f);
+                InvokeRepeating("Spawn", 2f, 0.9f);
             }
 
             cube = Instantiate(cube, new Vector3(Random.Range(-screenHalfWidth - 1, screenHalfWidth + 1), 15, 0), Quaternion.identity);

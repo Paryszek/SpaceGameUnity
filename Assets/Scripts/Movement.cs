@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class Movement : MonoBehaviour
 {
+    public GameObject Player;
     private float screenHalfWidth;
     private float targetPosition;
 
@@ -12,7 +13,15 @@ public class Movement : MonoBehaviour
     void Start()
     {
         InitScreenWidth();
-        targetPosition = Random.Range(-screenHalfWidth, screenHalfWidth);
+        int random = Random.Range(1, 5);
+        if (random == 5) 
+        {
+            targetPosition = Player.transform.position.x;
+        } 
+        else 
+        {
+            targetPosition = Random.Range(-screenHalfWidth, screenHalfWidth);
+        }
 
     }
 

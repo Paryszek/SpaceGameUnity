@@ -5660,6 +5660,11 @@ Prefab:
       propertyPath: Seconds
       value: 
       objectReference: {fileID: 817472997}
+    - target: {fileID: 114314808937832194, guid: 1985d582db53b304ab4ca74cf924c7ad,
+        type: 2}
+      propertyPath: Player
+      value: 
+      objectReference: {fileID: 1602262254}
     m_RemovedComponents:
     - {fileID: 61422424464147748, guid: 1985d582db53b304ab4ca74cf924c7ad, type: 2}
   m_SourcePrefab: {fileID: 100100000, guid: 1985d582db53b304ab4ca74cf924c7ad, type: 2}
@@ -6494,6 +6499,11 @@ Prefab:
       propertyPath: Seconds
       value: 
       objectReference: {fileID: 817472997}
+    - target: {fileID: 114314808937832194, guid: 1985d582db53b304ab4ca74cf924c7ad,
+        type: 2}
+      propertyPath: Player
+      value: 
+      objectReference: {fileID: 1602262254}
     m_RemovedComponents:
     - {fileID: 61422424464147748, guid: 1985d582db53b304ab4ca74cf924c7ad, type: 2}
   m_SourcePrefab: {fileID: 100100000, guid: 1985d582db53b304ab4ca74cf924c7ad, type: 2}
@@ -11818,7 +11828,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bbf38544204ba2469b4f70b5c0b33df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PowerAmount: 5.6
+  PowerAmount: 3
   MaxPower: 0.12
   MinPower: -0.12
   PowerUse: 0.005
