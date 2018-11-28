@@ -7,6 +7,11 @@ public class Movement : MonoBehaviour
 {
     private float screenHalfWidth;
     private float targetPosition;
+    public Button RestartGame;
+    public Button BackToMenu;
+    public Button Left;
+    public Button Right;
+
     // Use this for initialization
     void Start()
     {
@@ -40,9 +45,13 @@ public class Movement : MonoBehaviour
             CharacterController2D.gameOver.text = "Game Over";
             CharacterController2D.secondsText.text = "Seconds survived";
             CharacterController2D.seconds.text = Mathf.RoundToInt(CharacterController2D.time).ToString();
-            CharacterController2D.restartGameButton.transform.position = new Vector3(CharacterController2D.restartGameButtonInit.x, CharacterController2D.restartGameButtonInit.y, 0);
             CharacterController2D.time = 0f;
-        } else if (col.gameObject.tag == "Shield")
+            RestartGame.gameObject.SetActive(true);
+            BackToMenu.gameObject.SetActive(true);
+            Left.gameObject.SetActive(false);
+            Right.gameObject.SetActive(false);
+        }
+        else if (col.gameObject.tag == "Shield")
         {
             Destroy(this);
         }

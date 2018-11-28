@@ -6,9 +6,7 @@ using UnityEngine.UI;
 public class CharacterController2D : MonoBehaviour {
     public static Text gameOver;
     public static Text secondsText;
-    public static Text seconds;
-    public static Button restartGameButton;
-    public static Vector3 restartGameButtonInit;
+    public static Text seconds;    
     public static float time;
     public static float powerAmount = 5.6f;     
 
@@ -19,6 +17,10 @@ public class CharacterController2D : MonoBehaviour {
 
     public Image powerBar;
     public Image shieldBar;
+    public Button RestartGame;
+    public Button BackToMenu;
+    public Button Left;
+    public Button Right;
 
     private ParticleSystem particleLeft;
     private ParticleSystem particleRight;
@@ -43,11 +45,17 @@ public class CharacterController2D : MonoBehaviour {
         initPower = powerAmount;
         InitScreenWidth();
         InitLabels();
-        InitButtons();
         InitParticles();
-        shield.SetActive(false);       
+        shield.SetActive(false);
+        RestartGame.gameObject.SetActive(false);
+        RestartGame.onClick.AddListener(() => RestartClick());
+        BackToMenu.gameObject.SetActive(false);
+        BackToMenu.onClick.AddListener(() => BackToMenuClick());
+        Left.gameObject.SetActive(true);
+        Right.gameObject.SetActive(true);
 
-    }
+
+    }    
 
     void OnCollisionEnter2D(Collision2D col)
     {
@@ -115,12 +123,7 @@ public class CharacterController2D : MonoBehaviour {
 
         transform.position += playerSpeed;
 
-    }
-
-    public static void RestartClick()
-    {
-        Application.LoadLevel(Application.loadedLevel);
-    }
+    }    
 
     private void HandlePowerBar()
     {
@@ -147,17 +150,6 @@ public class CharacterController2D : MonoBehaviour {
         
     }
 
-    private void InitButtons()
-    {
-        GameObject canvasObject = GameObject.FindGameObjectWithTag("TextCanvas");
-        Transform transform = canvasObject.transform.Find("RestartButton");
-        restartGameButton = transform.GetComponent<Button>();
-        restartGameButton.onClick.AddListener(RestartClick);
-        restartGameButtonInit = new Vector3(restartGameButton.transform.position.x, restartGameButton.transform.position.y, 0);
-        restartGameButton.transform.position = new Vector3(-500, -500);
-
-    }
-
     private void InitParticles()
     {
         particleLeft = GameObject.Find("Particle Left").GetComponent<ParticleSystem>();
@@ -170,6 +162,16 @@ public class CharacterController2D : MonoBehaviour {
     {
         float halfPlayerWidth = transform.localScale.x / 2f;
         screenHalfWidth = Camera.main.aspect * Camera.main.orthographicSize + halfPlayerWidth;
+    }
+
+    public static void RestartClick()
+    {
+        Application.LoadLevel(Application.loadedLevel);
+    }
+
+    public static void BackToMenuClick()
+    {
+        Application.LoadLevel("Menu");
     }
 
 }
