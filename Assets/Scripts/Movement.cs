@@ -7,10 +7,6 @@ public class Movement : MonoBehaviour
 {
     private float screenHalfWidth;
     private float targetPosition;
-    public Button RestartGame;
-    public Button BackToMenu;
-    public Button Left;
-    public Button Right;
 
     // Use this for initialization
     void Start()
@@ -41,16 +37,7 @@ public class Movement : MonoBehaviour
     {
         if (col.gameObject.tag == "Player")
         {
-            Destroy(col.gameObject);    
-            RestartGame.gameObject.SetActive(true);
-            BackToMenu.gameObject.SetActive(true);
-            Left.gameObject.SetActive(false);
-            Right.gameObject.SetActive(false);
             CharacterController2D.alive = false;
-        }
-        else if (col.gameObject.tag == "Shield")
-        {
-            Destroy(this);
         }
     }
 

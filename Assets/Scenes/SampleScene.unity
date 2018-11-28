@@ -324,7 +324,6 @@ GameObject:
   - component: {fileID: 308810810}
   - component: {fileID: 308810812}
   - component: {fileID: 308810811}
-  - component: {fileID: 308810813}
   m_Layer: 0
   m_Name: Foreground
   m_TagString: Untagged
@@ -385,17 +384,6 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 308810809}
   m_CullTransparentMesh: 0
---- !u!114 &308810813
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 308810809}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 41d8bf8ad67d88a41885aed68a09ae72, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &341725130 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1616419727755018, guid: 1985d582db53b304ab4ca74cf924c7ad,
@@ -11844,6 +11832,7 @@ MonoBehaviour:
   SecondsText: {fileID: 1210430360}
   Seconds: {fileID: 817472997}
   shield: {fileID: 1108322875}
+  Astronaut: {fileID: 220693235}
   shieldLifeTime: 10
   horizontalAxis: Horizontal
 --- !u!61 &1602262260

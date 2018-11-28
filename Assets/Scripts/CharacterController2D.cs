@@ -22,9 +22,12 @@ public class CharacterController2D : MonoBehaviour {
     public Text SecondsText;
     public Text Seconds;    
     public GameObject shield;
+    public GameObject Astronaut;
+
     public float shieldLifeTime;
     public string horizontalAxis = "Horizontal";
 
+    private bool gameOverEmited;
     private ParticleSystem particleLeft;
     private ParticleSystem particleRight;
     private bool stopParticlePlay = false;
@@ -49,6 +52,8 @@ public class CharacterController2D : MonoBehaviour {
         BackToMenu.onClick.AddListener(() => BackToMenuClick());
         Left.gameObject.SetActive(true);
         Right.gameObject.SetActive(true);
+        Astronaut.SetActive(true);
+        gameOverEmited = false;
     }    
 
     void OnCollisionEnter2D(Collision2D col)
@@ -58,7 +63,8 @@ public class CharacterController2D : MonoBehaviour {
             PowerAmount += 0.09f;
             PowerAmount = PowerAmount > initPower ? initPower : PowerAmount;            
             Destroy(col.gameObject);
-        } else if (col.gameObject.tag == "Shield Bonus")
+        } 
+        if (col.gameObject.tag == "Shield Bonus")
         {
             shield.SetActive(true);
             GetComponent<BoxCollider2D>().enabled = false;
@@ -67,19 +73,14 @@ public class CharacterController2D : MonoBehaviour {
             Destroy(col.gameObject);
             shieldBar.fillAmount = 1;
             StartCoroutine(StopShield(shieldLifeTime));            
-        } else if (col.gameObject.tag == "Enemy")
-        {
-            GameOver.text = "Game Over";
-            SecondsText.text = "Seconds survived";
-            Seconds.text = Mathf.RoundToInt(CharacterController2D.time).ToString();
-        }
+        } 
+
 
     }
 
     IEnumerator StopShield(float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
-        shield.SetActive(false);
         shield.SetActive(false);
         GetComponent<CircleCollider2D>().enabled = false;
         GetComponent<BoxCollider2D>().enabled = true;
@@ -92,15 +93,16 @@ public class CharacterController2D : MonoBehaviour {
         time += Time.deltaTime;
         HandlePowerBar();
         HandleShieldBar();
+        HandleGameOver();
 
-        if (SimpleInput.GetAxis(horizontalAxis) < 0 && PowerAmount > 0)
+        if (SimpleInput.GetAxis(horizontalAxis) < 0 && PowerAmount > 0 && alive)
         {
             PowerAmount -= PowerUse;
             playerSpeed.x -= PowerUse;            
             particleLeft.Play();
         }
 
-        if (SimpleInput.GetAxis(horizontalAxis) > 0 && PowerAmount > 0)
+        if (SimpleInput.GetAxis(horizontalAxis) > 0 && PowerAmount > 0 && alive)
         {
             PowerAmount -= PowerUse;
             playerSpeed.x += PowerUse;
@@ -122,6 +124,24 @@ public class CharacterController2D : MonoBehaviour {
 
         transform.position += playerSpeed;
 
+    }
+
+    private void HandleGameOver() {
+        if (!alive && !gameOverEmited)
+        {
+            GameOver.text = "Game Over";
+            SecondsText.text = "Seconds survived";
+            Seconds.text = Mathf.RoundToInt(CharacterController2D.time).ToString();
+            RestartGame.gameObject.SetActive(true);
+            BackToMenu.gameObject.SetActive(true);
+            Left.gameObject.SetActive(false);
+            Right.gameObject.SetActive(false);
+            GetComponent<BoxCollider2D>().enabled = false;
+            Astronaut.SetActive(false);
+            gameOverEmited = true;
+            particleLeft.Stop();
+            particleRight.Stop();
+        }
     }
 
     private void HandlePowerBar()
