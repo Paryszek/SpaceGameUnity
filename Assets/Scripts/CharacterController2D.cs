@@ -18,6 +18,7 @@ public class CharacterController2D : MonoBehaviour {
     public float shieldLifeTime;
 
     public Image powerBar;
+    public Image shieldBar;
 
     private ParticleSystem particleLeft;
     private ParticleSystem particleRight;
@@ -62,9 +63,8 @@ public class CharacterController2D : MonoBehaviour {
             GetComponent<CircleCollider2D>().enabled = true;
             tag = "Shield";
             Destroy(col.gameObject);
-
-            StartCoroutine(StopShield(shieldLifeTime));
-
+            shieldBar.fillAmount = 1;
+            StartCoroutine(StopShield(shieldLifeTime));            
         }
 
     }
@@ -84,6 +84,7 @@ public class CharacterController2D : MonoBehaviour {
     {
         time += Time.deltaTime;
         HandlePowerBar();
+        HandleShieldBar();
 
         if (SimpleInput.GetAxis(horizontalAxis) < 0 && powerAmount > 0)
         {
@@ -125,6 +126,14 @@ public class CharacterController2D : MonoBehaviour {
     {
         var powerProcent = powerAmount * 100 / initPower;
         powerBar.fillAmount = powerProcent / 100;
+    }
+
+    private void HandleShieldBar()
+    {
+        if (shieldBar.fillAmount > 0)
+        {
+            shieldBar.fillAmount -= Time.deltaTime / shieldLifeTime;
+        }
     }
 
     private void InitLabels() {
