@@ -30,7 +30,8 @@ public class CharacterController2D : MonoBehaviour {
     private bool gameOverEmited;
     private ParticleSystem particleLeft;
     private ParticleSystem particleRight;
-    private bool stopParticlePlay = false;
+    private bool playParticleLeft = false;
+    private bool playParticleRight = false;
     private Button leftButton;
     private Button rightButton;
     private float screenHalfWidth;
@@ -66,12 +67,15 @@ public class CharacterController2D : MonoBehaviour {
         } 
         if (col.gameObject.tag == "Shield Bonus")
         {
+            if (!shield.active) 
+            {
+                shieldBar.fillAmount = 1;
+            }
             shield.SetActive(true);
             GetComponent<BoxCollider2D>().enabled = false;
             GetComponent<CircleCollider2D>().enabled = true;
             tag = "Shield";
             Destroy(col.gameObject);
-            shieldBar.fillAmount = 1;
             StartCoroutine(StopShield(shieldLifeTime));            
         } 
 
@@ -92,22 +96,36 @@ public class CharacterController2D : MonoBehaviour {
     {
         time += Time.deltaTime;
         HandlePowerBar();
-        HandleShieldBar();
+        HandleShield();
         HandleGameOver();
 
-        if (SimpleInput.GetAxis(horizontalAxis) < 0 && PowerAmount > 0 && alive)
+        if (SimpleInput.GetAxis(horizontalAxis) < 0 && PowerAmount > 0)
         {
             PowerAmount -= PowerUse;
-            playerSpeed.x -= PowerUse;            
-            particleLeft.Play();
+            playerSpeed.x -= PowerUse;
+            if (playParticleLeft == false)
+            {
+                particleLeft.Play();
+                playParticleLeft = true;
+            }
         }
-
-        if (SimpleInput.GetAxis(horizontalAxis) > 0 && PowerAmount > 0 && alive)
+        else if (SimpleInput.GetAxis(horizontalAxis) == 0)
+        {
+            playParticleLeft = false;
+            playParticleRight = false;
+            particleRight.Stop();
+            particleLeft.Stop();
+        }
+        else if (SimpleInput.GetAxis(horizontalAxis) > 0 && PowerAmount > 0)
         {
             PowerAmount -= PowerUse;
             playerSpeed.x += PowerUse;
-            particleRight.Play();
-        }        
+            if (playParticleRight == false)
+            {
+                particleRight.Play();
+                playParticleRight = true;
+            }
+        }
 
         if (transform.position.x < -screenHalfWidth)
         {
@@ -150,9 +168,9 @@ public class CharacterController2D : MonoBehaviour {
         powerBar.fillAmount = powerProcent / 100;
     }
 
-    private void HandleShieldBar()
+    private void HandleShield()
     {
-        if (shieldBar.fillAmount > 0)
+        if (shieldBar.fillAmount > 0 && alive)
         {
             shieldBar.fillAmount -= Time.deltaTime / shieldLifeTime;
         }
