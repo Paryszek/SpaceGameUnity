@@ -16,7 +16,7 @@ public class Bonus : MonoBehaviour
 
     void Spawn()
     {
-        if (CharacterController2D.gameOver.text != "Game Over") 
+        if (CharacterController2D.alive) 
 		{
             bonus = Instantiate(bonus, new Vector3(Random.Range(-screenHalfWidth, screenHalfWidth), 15, 0), Quaternion.identity);
             bonus.name = "Bonus";

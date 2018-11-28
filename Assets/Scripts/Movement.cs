@@ -41,15 +41,12 @@ public class Movement : MonoBehaviour
     {
         if (col.gameObject.tag == "Player")
         {
-            Destroy(col.gameObject);
-            CharacterController2D.gameOver.text = "Game Over";
-            CharacterController2D.secondsText.text = "Seconds survived";
-            CharacterController2D.seconds.text = Mathf.RoundToInt(CharacterController2D.time).ToString();
-            CharacterController2D.time = 0f;
+            Destroy(col.gameObject);    
             RestartGame.gameObject.SetActive(true);
             BackToMenu.gameObject.SetActive(true);
             Left.gameObject.SetActive(false);
             Right.gameObject.SetActive(false);
+            CharacterController2D.alive = false;
         }
         else if (col.gameObject.tag == "Shield")
         {

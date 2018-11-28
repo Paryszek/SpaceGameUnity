@@ -13,7 +13,7 @@ public class Cubes : MonoBehaviour {
     }
 	
 	void Spawn () {
-		if (CharacterController2D.gameOver.text != "Game Over")
+		if (CharacterController2D.alive)
 		{
 		    var time = CharacterController2D.time;
             if (Mathf.RoundToInt(time) == 10)

@@ -5652,6 +5652,26 @@ Prefab:
       propertyPath: BackToMenu
       value: 
       objectReference: {fileID: 352059320}
+    - target: {fileID: 114314808937832194, guid: 1985d582db53b304ab4ca74cf924c7ad,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114314808937832194, guid: 1985d582db53b304ab4ca74cf924c7ad,
+        type: 2}
+      propertyPath: GameOver
+      value: 
+      objectReference: {fileID: 673041210}
+    - target: {fileID: 114314808937832194, guid: 1985d582db53b304ab4ca74cf924c7ad,
+        type: 2}
+      propertyPath: SecondsText
+      value: 
+      objectReference: {fileID: 1210430360}
+    - target: {fileID: 114314808937832194, guid: 1985d582db53b304ab4ca74cf924c7ad,
+        type: 2}
+      propertyPath: Seconds
+      value: 
+      objectReference: {fileID: 817472997}
     m_RemovedComponents:
     - {fileID: 61422424464147748, guid: 1985d582db53b304ab4ca74cf924c7ad, type: 2}
   m_SourcePrefab: {fileID: 100100000, guid: 1985d582db53b304ab4ca74cf924c7ad, type: 2}
@@ -6471,6 +6491,21 @@ Prefab:
       propertyPath: Right
       value: 
       objectReference: {fileID: 672452299}
+    - target: {fileID: 114314808937832194, guid: 1985d582db53b304ab4ca74cf924c7ad,
+        type: 2}
+      propertyPath: GameOver
+      value: 
+      objectReference: {fileID: 673041210}
+    - target: {fileID: 114314808937832194, guid: 1985d582db53b304ab4ca74cf924c7ad,
+        type: 2}
+      propertyPath: SecondsText
+      value: 
+      objectReference: {fileID: 1210430360}
+    - target: {fileID: 114314808937832194, guid: 1985d582db53b304ab4ca74cf924c7ad,
+        type: 2}
+      propertyPath: Seconds
+      value: 
+      objectReference: {fileID: 817472997}
     m_RemovedComponents:
     - {fileID: 61422424464147748, guid: 1985d582db53b304ab4ca74cf924c7ad, type: 2}
   m_SourcePrefab: {fileID: 100100000, guid: 1985d582db53b304ab4ca74cf924c7ad, type: 2}
@@ -11795,15 +11830,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bbf38544204ba2469b4f70b5c0b33df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  horizontalAxis: Horizontal
-  shield: {fileID: 1108322875}
-  shieldLifeTime: 10
+  PowerAmount: 5.6
+  MaxPower: 0.12
+  MinPower: -0.12
+  PowerUse: 0.005
   powerBar: {fileID: 308810811}
   shieldBar: {fileID: 213893540}
   RestartGame: {fileID: 817294249}
   BackToMenu: {fileID: 352059320}
   Left: {fileID: 1049019043}
   Right: {fileID: 672452299}
+  GameOver: {fileID: 673041210}
+  SecondsText: {fileID: 1210430360}
+  Seconds: {fileID: 817472997}
+  shield: {fileID: 1108322875}
+  shieldLifeTime: 10
+  horizontalAxis: Horizontal
 --- !u!61 &1602262260
 BoxCollider2D:
   m_ObjectHideFlags: 0

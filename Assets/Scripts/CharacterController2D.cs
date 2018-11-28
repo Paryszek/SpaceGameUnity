@@ -3,17 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CharacterController2D : MonoBehaviour {
-    public static Text gameOver;
-    public static Text secondsText;
-    public static Text seconds;    
+public class CharacterController2D : MonoBehaviour {   
     public static float time;
-    public static float powerAmount = 5.6f;     
+    public static bool alive;
 
-    public string horizontalAxis = "Horizontal";
-
-    public GameObject shield;
-    public float shieldLifeTime;
+    public float PowerAmount;
+    public float MaxPower;
+    public float MinPower;
+    public float PowerUse;
 
     public Image powerBar;
     public Image shieldBar;
@@ -21,30 +18,29 @@ public class CharacterController2D : MonoBehaviour {
     public Button BackToMenu;
     public Button Left;
     public Button Right;
+    public Text GameOver;
+    public Text SecondsText;
+    public Text Seconds;    
+    public GameObject shield;
+    public float shieldLifeTime;
+    public string horizontalAxis = "Horizontal";
 
     private ParticleSystem particleLeft;
     private ParticleSystem particleRight;
-
     private bool stopParticlePlay = false;
-
-    private float MAX_POWER = 0.12f;
-    private float MIN_POWER = -0.12f;
-
     private Button leftButton;
     private Button rightButton;
-
     private float screenHalfWidth;
     private float initPower;
     private Vector3 playerSpeed = new Vector3(0, 0);
-
     private bool restartGame = false;
 
     void Start()
     {
-        time = 0f;        
-        initPower = powerAmount;
+        time = 0f;
+        alive = true;
+        initPower = PowerAmount;
         InitScreenWidth();
-        InitLabels();
         InitParticles();
         shield.SetActive(false);
         RestartGame.gameObject.SetActive(false);
@@ -53,16 +49,14 @@ public class CharacterController2D : MonoBehaviour {
         BackToMenu.onClick.AddListener(() => BackToMenuClick());
         Left.gameObject.SetActive(true);
         Right.gameObject.SetActive(true);
-
-
     }    
 
     void OnCollisionEnter2D(Collision2D col)
     {
         if (col.gameObject.tag == "Bonus")
         { 
-            powerAmount += 0.09f;
-            powerAmount = powerAmount > initPower ? initPower : powerAmount;            
+            PowerAmount += 0.09f;
+            PowerAmount = PowerAmount > initPower ? initPower : PowerAmount;            
             Destroy(col.gameObject);
         } else if (col.gameObject.tag == "Shield Bonus")
         {
@@ -73,6 +67,11 @@ public class CharacterController2D : MonoBehaviour {
             Destroy(col.gameObject);
             shieldBar.fillAmount = 1;
             StartCoroutine(StopShield(shieldLifeTime));            
+        } else if (col.gameObject.tag == "Enemy")
+        {
+            GameOver.text = "Game Over";
+            SecondsText.text = "Seconds survived";
+            Seconds.text = Mathf.RoundToInt(CharacterController2D.time).ToString();
         }
 
     }
@@ -94,19 +93,19 @@ public class CharacterController2D : MonoBehaviour {
         HandlePowerBar();
         HandleShieldBar();
 
-        if (SimpleInput.GetAxis(horizontalAxis) < 0 && powerAmount > 0)
+        if (SimpleInput.GetAxis(horizontalAxis) < 0 && PowerAmount > 0)
         {
-            powerAmount -= 0.005f;
-            playerSpeed.x -= 0.005f;            
+            PowerAmount -= PowerUse;
+            playerSpeed.x -= PowerUse;            
             particleLeft.Play();
         }
 
-        if (SimpleInput.GetAxis(horizontalAxis) > 0 && powerAmount > 0)
+        if (SimpleInput.GetAxis(horizontalAxis) > 0 && PowerAmount > 0)
         {
-            powerAmount -= 0.005f;
-            playerSpeed.x += 0.005f;
+            PowerAmount -= PowerUse;
+            playerSpeed.x += PowerUse;
             particleRight.Play();
-        }    
+        }        
 
         if (transform.position.x < -screenHalfWidth)
         {
@@ -118,16 +117,16 @@ public class CharacterController2D : MonoBehaviour {
             transform.position = new Vector3(-screenHalfWidth, transform.position.y);
         }
 
-        playerSpeed.x = playerSpeed.x > MAX_POWER ? MAX_POWER : playerSpeed.x;
-        playerSpeed.x = playerSpeed.x < MIN_POWER ? MIN_POWER : playerSpeed.x;
+        playerSpeed.x = playerSpeed.x > MaxPower ? MaxPower : playerSpeed.x;
+        playerSpeed.x = playerSpeed.x < MinPower ? MinPower : playerSpeed.x;
 
         transform.position += playerSpeed;
 
-    }    
+    }
 
     private void HandlePowerBar()
     {
-        var powerProcent = powerAmount * 100 / initPower;
+        var powerProcent = PowerAmount * 100 / initPower;
         powerBar.fillAmount = powerProcent / 100;
     }
 
@@ -137,17 +136,6 @@ public class CharacterController2D : MonoBehaviour {
         {
             shieldBar.fillAmount -= Time.deltaTime / shieldLifeTime;
         }
-    }
-
-    private void InitLabels() {
-        GameObject canvasObject = GameObject.FindGameObjectWithTag("TextCanvas");
-        Transform transform = canvasObject.transform.Find("GameOver");
-        gameOver = transform.GetComponent<Text>();
-        transform = canvasObject.transform.Find("SecondsText");
-        secondsText = transform.GetComponent<Text>();
-        transform = canvasObject.transform.Find("Seconds");
-        seconds = transform.GetComponent<Text>();        
-        
     }
 
     private void InitParticles()
