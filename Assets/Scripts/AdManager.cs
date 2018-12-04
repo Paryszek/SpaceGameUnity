@@ -8,7 +8,10 @@ public class AdManager : MonoBehaviour
     private bool adShowed;
 
 	// Use this for initialization
-	void Start () {}
+	void Start () {
+        //Android ads
+        Advertisement.Initialize("2949874", false);
+    }
 	
 	// Update is called once per frame
 	void Update () {
