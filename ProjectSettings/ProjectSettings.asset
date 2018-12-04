@@ -709,11 +709,15 @@ PlayerSettings:
       daydreamIconForeground: {fileID: 0}
       daydreamIconBackground: {fileID: 0}
   cloudServicesEnabled:
+    Build: 0
+    Collab: 0
+    ErrorHub: 0
+    Hub: 0
     UNet: 1
   facebookSdkVersion: 7.9.4
   apiCompatibilityLevel: 2
-  cloudProjectId: 40ede292-0371-4a74-844a-2f329ffe5b29
-  projectName: New Unity Project (1)
+  cloudProjectId: 129df5da-09a6-422a-9260-4ac5e67c6b90
+  projectName: SpaceGame
   organizationId: paryszek
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0
