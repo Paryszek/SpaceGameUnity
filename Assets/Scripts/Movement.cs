@@ -13,7 +13,7 @@ public class Movement : MonoBehaviour
     void Start()
     {
         InitScreenWidth();
-        int random = Random.Range(1, 5);
+        int random = Random.Range(1, 10);
         if (random == 5) 
         {
             targetPosition = Player.transform.position.x;
