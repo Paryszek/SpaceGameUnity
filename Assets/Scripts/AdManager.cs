@@ -16,7 +16,13 @@ public class AdManager : MonoBehaviour
 	    {
 	        int random = Random.Range(1, 4);
             if (random == 2)
-                Advertisement.Show("banner");
+            {
+                if (Advertisement.IsReady("banner"))
+                {
+                    Advertisement.Show("banner");
+                }
+            }                
+                    
 	        adShowed = true;
 	    }
 

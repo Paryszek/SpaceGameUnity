@@ -30,10 +30,10 @@ public class Movement : MonoBehaviour
     {
         if (transform.position.x < targetPosition) 
         {
-            transform.position = new Vector3(transform.position.x + 0.009f, transform.position.y);
+            transform.position = new Vector3(transform.position.x + 0.007f, transform.position.y);
         } else if (transform.position.x >= targetPosition)
         {
-            transform.position = new Vector3(transform.position.x - 0.009f, transform.position.y);
+            transform.position = new Vector3(transform.position.x - 0.007f, transform.position.y);
         }                    
 
         if (transform.localPosition.y < -15)

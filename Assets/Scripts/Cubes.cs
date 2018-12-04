@@ -8,7 +8,7 @@ public class Cubes : MonoBehaviour {
     private float screenHalfWidth;
 
     void Start () {
-        InvokeRepeating("Spawn", 2f, 1f);
+        InvokeRepeating("Spawn", 2f, 1.5f);
         InitScreenWidth();        
     }
 	
@@ -18,43 +18,19 @@ public class Cubes : MonoBehaviour {
 		    var time = CharacterController2D.time;
             if (Mathf.RoundToInt(time) == 10)
             {
-                InvokeRepeating("Spawn", 2f, 0.995f);
+                InvokeRepeating("Spawn", 2f, 1.25f);
             }
 
-            if (Mathf.RoundToInt(time) == 30)
+            if (Mathf.RoundToInt(time) == 250)
             {
-                InvokeRepeating("Spawn", 2f, 0.985f);
+                InvokeRepeating("Spawn", 0f, 1f);
+            }
+           
+            if (Mathf.RoundToInt(time) == 500)
+            {
+                InvokeRepeating("Spawn", 0f, 0.95f);
             }
 
-            if (Mathf.RoundToInt(time) == 70)
-            {
-                InvokeRepeating("Spawn", 2f, 0.98f);
-            }
-
-            if (Mathf.RoundToInt(time) == 150)
-            {
-                InvokeRepeating("Spawn", 2f, 0.96f);
-            }
-
-            if (Mathf.RoundToInt(time) == 310)
-            {
-                InvokeRepeating("Spawn", 2f, 0.95f);
-            }
-
-            if (Mathf.RoundToInt(time) == 610)
-            {
-                InvokeRepeating("Spawn", 2f, 0.94f);
-            }
-
-            if (Mathf.RoundToInt(time) == 1210)
-            {
-                InvokeRepeating("Spawn", 2f, 0.93f);
-            }
-
-            if (Mathf.RoundToInt(time) == 2410)
-            {
-                InvokeRepeating("Spawn", 2f, 0.9f);
-            }
 
             cube = Instantiate(cube, new Vector3(Random.Range(-screenHalfWidth - 1, screenHalfWidth + 1), 15, 0), Quaternion.identity);
 			cube.name = "Cube";

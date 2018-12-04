@@ -11,6 +11,7 @@ public class CharacterController2D : MonoBehaviour {
     public float MaxPower;
     public float MinPower;
     public float PowerUse;
+    public float BonusAdd;
 
     public Image powerBar;
     public Image shieldBar;
@@ -61,7 +62,7 @@ public class CharacterController2D : MonoBehaviour {
     {
         if (col.gameObject.tag == "Bonus")
         { 
-            PowerAmount += 0.09f;
+            PowerAmount += BonusAdd;
             PowerAmount = PowerAmount > initPower ? initPower : PowerAmount;            
             Destroy(col.gameObject);
         } 

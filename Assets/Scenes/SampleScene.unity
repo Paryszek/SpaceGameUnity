@@ -11843,7 +11843,8 @@ MonoBehaviour:
   PowerAmount: 3
   MaxPower: 0.12
   MinPower: -0.12
-  PowerUse: 0.005
+  PowerUse: 0.002
+  BonusAdd: 0.15
   powerBar: {fileID: 308810811}
   shieldBar: {fileID: 213893540}
   RestartGame: {fileID: 817294249}
