@@ -17,16 +17,16 @@ public class AdManager : MonoBehaviour
 	void Update () {
 	    if (!CharacterController2D.alive && !adShowed)
 	    {
-	        int random = Random.Range(1, 4);
+            int random = Random.Range(1, 4);
             if (random == 2)
             {
                 if (Advertisement.IsReady("banner"))
                 {
                     Advertisement.Show("banner");
                 }
-            }                
-                    
-	        adShowed = true;
+            }
+
+            adShowed = true;
 	    }
 
 	    if (CharacterController2D.alive)

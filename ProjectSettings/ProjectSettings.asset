@@ -244,7 +244,7 @@ PlayerSettings:
   AndroidTargetArchitectures: 5
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
-  AndroidKeystoreName: C:/Users/parys/Desktop/SpaceGameUnity/Build/user.keystore
+  AndroidKeystoreName: C:/Users/mparysz/Desktop/SpaceGameUnity/APK/user.keystore
   AndroidKeyaliasName: spacegame
   AndroidBuildApkPerCpuArchitecture: 0
   AndroidTVCompatibility: 1
